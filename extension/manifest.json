@@ -1,19 +1,20 @@
 {
-  "name": "Shellac",
-  "version": "0.3",
+  "name": "ChrisonBreak",
+  "version": "0.1",
   "manifest_version": 2,
-  "description": "Extend Chrome with unix shell commands.",
+  "description": "Redirect all link opens to system.",
   "background" : {
-    "page" : "background.html",
+    "scripts": ["shared.js", "bg.js"],
     "persistent" : true
   },
   "browser_action": {
     "default_icon": "icon-64x64.png",
-    "default_title": "Shellac",
+    "default_title": "ChrisonBreak",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "contextMenus",
+    "tabs",
+    "webNavigation",
     "http://127.0.0.1/*"
   ],
   "icons": {

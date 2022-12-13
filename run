@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec src/app.py 8783
+
