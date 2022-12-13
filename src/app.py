@@ -31,6 +31,8 @@ class html(BaseHTTPRequestHandler):
         cmd = "xdg-open {}".format(quote(body))
         argv = ["/bin/sh", "-c", cmd]
 
+        print(cmd)
+        
         pid = os.fork()
 
         if pid == 0:

@@ -1,28 +1,26 @@
-// chrome.tabs.onCreated.addListener(function(tab) {
-//     console.log(tab);
-//     console.log("oncreated");
-//     /* tabs.onUpdated */
-//     // chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-//     //     status = changeInfo.status;
-//     // });
-//     // while (status != 'complete'){
-//     //     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-//     //         status = changeInfo.status;
-//     //     });
-//     // }
-//     // /* At this point, url tab is complete so I can capture it*/
-// });
-
+const init_tabs = [];
 
 chrome.webNavigation.onBeforeNavigate.addListener(function(e) {
   logger(e);
+
+  // Do not close frames
   if (e.frameId != 0) {
     return;
   }
 
-  chrome.tabs.remove(e.tabId);
-  logger(e.url);
-  req('/', e.url);
+  // Do not close chrome/brave pages
+  if (e.url.match(/^(chrome|brave):\/\//)) {
+    return;
+  }
 
-  // , {url: [{hostSuffix: 'google.com'},             {hostSuffix: 'google.com.au'}]}
+  // Ignore the first tab (assuming this is the app)
+  if (init_tabs.length === 0) {
+    init_tabs.push(e.tabId);
+  }
+  // Close all tabs attempting to navigate, except the first one
+  else if (init_tabs.indexOf(e.tabId) < 0) {
+    chrome.tabs.remove(e.tabId);
+    logger(e.url);
+    req('/', e.url);
+  }
 });

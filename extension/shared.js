@@ -1,6 +1,6 @@
 var base_url = "http://127.0.0.1:8783";
-var DEBUG = 0;   // set to '1' to see console logging
-var logger = () => { if (DEBUG) console.log.apply(console, arguments); };
+var DEBUG = 1;   // set to '1' to see console logging
+var logger = (arguments) => { if (DEBUG) console.log(arguments); };
 
 
 function req(uri, data) {
